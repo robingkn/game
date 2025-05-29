@@ -63,19 +63,71 @@ function createObstacle() {
   }, 30);
 }
 
-// Touch controls for mobile
+// Touch and swipe controls for mobile
+let touchStartX = null;
+let touchEndX = null;
+
 road.addEventListener('touchstart', function(e) {
   if (!e.touches || e.touches.length === 0) return;
-  const touch = e.touches[0];
-  const rect = road.getBoundingClientRect();
-  const x = touch.clientX - rect.left;
-  if (x < rect.width / 2 && carPosition > 0) {
-    carPosition -= 20;
-  } else if (x >= rect.width / 2 && carPosition < 360) {
-    carPosition += 20;
-  }
-  car.style.left = `${carPosition}px`;
+  touchStartX = e.touches[0].clientX;
 });
+
+road.addEventListener('touchmove', function(e) {
+  if (!e.touches || e.touches.length === 0) return;
+  touchEndX = e.touches[0].clientX;
+});
+
+road.addEventListener('touchend', function(e) {
+  if (touchStartX === null || touchEndX === null) return;
+  const dx = touchEndX - touchStartX;
+  if (Math.abs(dx) > 30) {
+    if (dx < 0 && carPosition > 0) {
+      carPosition -= 20;
+    } else if (dx > 0 && carPosition < 360) {
+      carPosition += 20;
+    }
+    car.style.left = `${carPosition}px`;
+  }
+  touchStartX = null;
+  touchEndX = null;
+});
+
+// On-screen control buttons for mobile
+function createControlButtons() {
+  if (document.querySelector('.control-buttons')) return;
+  const controls = document.createElement('div');
+  controls.className = 'control-buttons';
+  controls.innerHTML = `
+    <button class="control-btn" id="btn-left">⟵</button>
+    <button class="control-btn" id="btn-right">⟶</button>
+  `;
+  document.querySelector('.game-container').appendChild(controls);
+  document.getElementById('btn-left').addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    if (carPosition > 0) {
+      carPosition -= 20;
+      car.style.left = `${carPosition}px`;
+    }
+  });
+  document.getElementById('btn-right').addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    if (carPosition < 360) {
+      carPosition += 20;
+      car.style.left = `${carPosition}px`;
+    }
+  });
+}
+
+// Show controls on mobile
+if (window.innerWidth < 700) {
+  createControlButtons();
+}
+window.addEventListener('resize', () => {
+  if (window.innerWidth < 700) {
+    createControlButtons();
+  }
+});
+
 // Start game
 gameInterval = setInterval(() => {}, 100);
 obstacleInterval = setInterval(createObstacle, 1000);
