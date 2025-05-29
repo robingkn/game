@@ -63,6 +63,19 @@ function createObstacle() {
   }, 30);
 }
 
+// Touch controls for mobile
+road.addEventListener('touchstart', function(e) {
+  if (!e.touches || e.touches.length === 0) return;
+  const touch = e.touches[0];
+  const rect = road.getBoundingClientRect();
+  const x = touch.clientX - rect.left;
+  if (x < rect.width / 2 && carPosition > 0) {
+    carPosition -= 20;
+  } else if (x >= rect.width / 2 && carPosition < 360) {
+    carPosition += 20;
+  }
+  car.style.left = `${carPosition}px`;
+});
 // Start game
 gameInterval = setInterval(() => {}, 100);
 obstacleInterval = setInterval(createObstacle, 1000);
