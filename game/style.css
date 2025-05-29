@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  background: #000;
+  font-family: sans-serif;
+}
+
+.game-container {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  margin: 40px auto;
+  overflow: hidden;
+  border: 4px solid #fff;
+  background: #222;
+}
+
+.road {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    #333,
+    #333 40px,
+    #444 40px,
+    #444 80px
+  );
+}
+
+/* Player car */
+.car {
+  position: absolute;
+  bottom: 20px;
+  left: 180px;
+  width: 40px;
+  height: 70px;
+}
+
+.car .body {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 40px;
+  height: 50px;
+  background: crimson;
+  border-radius: 4px;
+}
+
+.car .roof {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  width: 30px;
+  height: 20px;
+  background: #800;
+  border-radius: 3px;
+}
+
+.car .wheel {
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  background: black;
+  border-radius: 2px;
+}
+
+.front-left { top: 5px; left: -6px; }
+.front-right { top: 5px; right: -6px; }
+.rear-left { bottom: 5px; left: -6px; }
+.rear-right { bottom: 5px; right: -6px; }
+
+/* Obstacles */
+.obstacle {
+  position: absolute;
+  width: 40px;
+  height: 70px;
+  top: 0;
+}
+
+.obstacle .body {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 40px;
+  height: 50px;
+  background: gold;
+  border-radius: 4px;
+}
+
+.obstacle .roof {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  width: 30px;
+  height: 20px;
+  background: #aa0;
+  border-radius: 3px;
+}
+
+.obstacle .wheel {
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  background: black;
+  border-radius: 2px;
+}
+
+.obstacle .front-left { top: 5px; left: -6px; }
+.obstacle .front-right { top: 5px; right: -6px; }
+.obstacle .rear-left { bottom: 5px; left: -6px; }
+.obstacle .rear-right { bottom: 5px; right: -6px; }
+
+/* Score */
+.score {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 10px;
+  font-weight: bold;
+}
